@@ -1,0 +1,196 @@
+body {
+  width: 99%;
+  background-color: #D9DCE0;
+}
+.register-bg {
+  background-image: url(images/register-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.register-card {
+  height: 500px;
+  background-color: white;
+  margin-top: 20%;
+  border-radius: 20px;
+  box-shadow: 2px 1px 2px 1px #dfe6e5;
+}
+.register-title {
+  color: #2d848a;
+  font-family: "Stack Sans Notch", sans-serif;
+  font-weight: 800;
+  font-size: 40px;
+  padding-top: 50px;
+}
+.register-inputs {
+  margin-top: 50px;
+}
+.btn-cus1 {
+  background-color: #2d898b;
+  color: white;
+  width: 100%;
+  font-size: 20px;
+  margin-top: 30px;
+  font-family: "Stack Sans Notch", sans-serif;
+}
+.btn-cus1:hover {
+  border: 1px solid #2d898b;
+  color: #2d898b;
+}
+.divider {
+  margin-top: 10%;
+}
+/* navbar */
+.main-navbar{
+  height: 80px;
+  background-color: white;
+  padding-top: 2%;
+  margin-bottom: 2%;
+  position: fixed;
+
+}
+.content-title{
+  border-bottom: 1px solid #edeff3;
+  height: 6%;
+   font-family: "Stack Sans Notch", sans-serif;
+   padding: 10px;
+   padding-left: 50px ;
+  width: 100%;
+}
+
+/* navbar */
+
+/*sidebar */
+.sidebar{
+  position: fixed;
+  width: 16%;
+}
+/*sidebar */
+/*menu */
+.menu{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.menu-link {
+  text-decoration: none;
+  color: grey;
+  cursor: pointer;
+  font-family: "Stack Sans Notch", sans-serif;
+  padding-left: 5%;
+}
+.menu-link:hover{
+  color: white;
+}
+
+.menu-content{
+  margin: 20px;
+}
+.menu-item{
+  text-decoration: none;
+  color: grey;
+  cursor: pointer;
+  font-family: "Stack Sans Notch", sans-serif;
+  padding-left: 5%;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+.menu-item:hover{
+  color: white;
+}
+/*menu */
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+  .logo {
+    display: none;
+  }
+  .logo-mobile {
+    font-family: "Stack Sans Notch", sans-serif;
+    padding-top: 5%;
+    padding-left: 10%;
+    color: white;
+    display: block;
+    color: #041b15;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+  .logo {
+    display: none;
+  }
+  .logo-mobile {
+    font-family: "Stack Sans Notch", sans-serif;
+    padding-top: 5%;
+    color: white;
+    padding-left: 10%;
+    display: block;
+    color: #041b15;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+  .logo {
+    font-family: "Stack Sans Notch", sans-serif;
+    padding-top: 5%;
+    color: white;
+    display: block;
+  }
+  .logo-mobile {
+    font-family: "Stack Sans Notch", sans-serif;
+    padding-top: 5%;
+    padding-left: 10%;
+    color: white;
+    display: block;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .sidebar {
+    display: block;
+    background-color: #041b15;
+    height: 900px;
+  }
+  .logo {
+    font-family: "Stack Sans Notch", sans-serif;
+    padding-top: 5%;
+    color: white;
+    display: block;
+  }
+  .logo-mobile {
+    display: none;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .sidebar {
+    display: block;
+    background-color: #041b15;
+    height: 900px;
+  }
+  .logo {
+    font-family: "Stack Sans Notch", sans-serif;
+    padding-top: 5%;
+    color: white;
+  }
+}
+
+.main-container {
+  width: 100%;
+  margin-left: 0px;
+}
+.main {
+  background-color: transparent;
+  margin-left: 0px;
+}
