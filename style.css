@@ -43,10 +43,13 @@ body {
 .main-navbar{
   height: 80px;
   background-color: white;
-  padding-top: 2%;
+  padding: 15px 20px;
   margin-bottom: 2%;
   position: fixed;
-
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .content-title{
   border-bottom: 1px solid #edeff3;
@@ -114,6 +117,10 @@ body {
     display: block;
     color: #041b15;
   }
+  .main-navbar {
+    width: 100%;
+    left: 0;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -131,6 +138,10 @@ body {
     padding-left: 10%;
     display: block;
     color: #041b15;
+  }
+  .main-navbar {
+    width: 100%;
+    left: 0;
   }
 }
 
@@ -152,6 +163,10 @@ body {
     color: white;
     display: block;
   }
+  .main-navbar {
+    width: 100%;
+    left: 0;
+  }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
@@ -170,6 +185,10 @@ body {
   .logo-mobile {
     display: none;
   }
+  .main-navbar {
+    width: 83.33%;
+    left: 16.67%;
+  }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -183,6 +202,10 @@ body {
     font-family: "Stack Sans Notch", sans-serif;
     padding-top: 5%;
     color: white;
+  }
+  .main-navbar {
+    width: 83.33%;
+    left: 16.67%;
   }
 }
 

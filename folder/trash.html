@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trash Bin - FileShare</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <div class="main-container">
+    <div class="row">
+      <div class="col-lg-2">
+        <div class="row sidebar">
+          <div class="col-lg-12 text-center">
+            <a style="text-decoration: none;" href="../index.html">
+              <h2 class="logo">FileShare</h2>
+            </a>
+          </div>
+          <div class="divider"></div>
+          <div class="col-lg-12 menu">
+            <div class="col-lg-12">
+              <a class="row menu-link" onclick="showMenu(1)">
+                <div class="col-lg-9"><span><i class="fa-solid fa-house-laptop"></i></span> <span
+                    style="padding-left: 5%;">Home</span></div>
+                <div id="menu-link-1" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
+              </a>
+            </div>
+            <div id="menu-content-1" style="display: none;" class="col-lg-10 menu-content">
+              <a class="menu-item col-lg-12">
+                <span><i class="fa-solid fa-minus"></i> <span style="padding-left: 5%;">Dashboard</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-12 menu">
+            <div class="col-lg-12">
+              <a class="row menu-link" onclick="showMenu(2)">
+                <div class="col-lg-9"><span><i class="fa-solid fa-folder"></i></span> <span
+                    style="padding-left: 5%;">Folder</span></div>
+                <div id="menu-link-2" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
+              </a>
+            </div>
+            <div id="menu-content-2" style="display: none;" class="col-lg-10 menu-content">
+              <div class="row col-lg-12">
+                <a href="create.html" class="menu-item col-lg-12">
+                  <span><i class="fa-solid fa-plus"></i> <span style="padding-left: 5%;">Add New Folder</span>
+                </a>
+                <a href="all.html" class="menu-item col-lg-12">
+                  <span><i class="fa-solid fa-list"></i> <span style="padding-left: 5%;">List All</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 menu">
+            <div class="col-lg-12">
+              <a class="row menu-link" onclick="showMenu(3)">
+                <div class="col-lg-9"><span><i class="fa-solid fa-folder-open"></i></span> <span
+                    style="padding-left: 5%;">My Folders</span></div>
+                <div id="menu-link-3" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
+              </a>
+            </div>
+            <div id="menu-content-3" style="display: none;" class="col-lg-10 menu-content">
+              <div id="folderDropdownList" class="col-lg-12">
+                <div class="text-center" style="padding: 10px; font-size: 12px; color: #999;">
+                  <i class="fa-solid fa-spinner fa-spin"></i> Loading...
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 menu">
+            <div class="col-lg-12">
+              <a class="row menu-link" onclick="showMenu(4)">
+                <div class="col-lg-9"><span><i class="fa-solid fa-trash"></i></span> <span
+                    style="padding-left: 5%;">Trash Bin</span></div>
+                <div id="menu-link-4" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
+              </a>
+            </div>
+            <div id="menu-content-4" style="display: none;" class="col-lg-10 menu-content">
+              <div class="row col-lg-12">
+                <a href="trash.html" class="menu-item col-lg-12">
+                  <span><i class="fa-solid fa-trash-can"></i> <span style="padding-left: 5%;">View Trash</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-10 main" style="
+            margin-left: 0px;
+            margin-right: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+          ">
+        <div class="main-navbar col-lg-12">
+          <div class="row align-items-center" style="width: 100%;">
+            <div class="col-lg-6">
+              <div class="row align-items-center">
+                <div class="col-lg-1"><i style="font-size: 20px;" class="fa-solid fa-bars"></i></div>
+                <div class="col-lg-7">
+                  <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1" style="background-color:white;"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="d-flex justify-content-end align-items-center" style="padding-right: 20px;">
+                <div class="dropdown">
+                  <button class="btn btn-light dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 50px; padding: 8px 20px; border: 1px solid #ddd;">
+                    <i class="fa-solid fa-user-circle" style="font-size: 20px; margin-right: 8px; color: #0d6efd;"></i>
+                    <span id="username-display" style="font-weight: 500;">User</span>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenuDropdown" style="min-width: 200px;">
+                    <li>
+                      <a class="dropdown-item" href="#" onclick="changePassword(); return false;">
+                        <i class="fa-solid fa-key" style="margin-right: 8px;"></i> Change Password
+                      </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <a class="dropdown-item text-danger" href="#" onclick="logout(); return false;">
+                        <i class="fa-solid fa-right-from-bracket" style="margin-right: 8px;"></i> Logout
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row main-container"
+          style="padding:20px;border-radius:20px ;width: 98%;min-height: 600px;background-color: white;margin-top:100px;margin-left: 10px;margin-right: 10px;margin-bottom: 20px;">
+          <div class="col-lg-12 row">
+            <h2 class="content-title"><i class="fa-solid fa-trash"></i> Trash Bin</h2>
+            <p class="text-muted">Deleted folders will be permanently removed after 30 days</p>
+          </div>
+          <div class="col-lg-12 row" style="margin-top:20px;">
+            <div id="trash-list" class="row">
+              <!-- Deleted folders will be displayed here -->
+              <div class="text-center" style="padding: 50px;">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">Loading trash...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
+    integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+    integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/js/all.min.js"
+    integrity="sha512-6BTOlkauINO65nLhXhthZMtepgJSghyimIalb+crKRPhvhmsCdnIuGcVbR5/aQY2A+260iC1OPy1oCdB6pSSwQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    function showMenu(id) {
+      let dropdown = document.getElementById("menu-link-" + id);
+      let status = dropdown.dataset.status;
+      if (status == 0) {
+        document.getElementById("menu-link-" + id).innerHTML = '<i  class="fa-solid fa-angles-down"></i>';
+        document.getElementById("menu-link-" + id).dataset.status = 1
+        document.getElementById("menu-content-" + id).style.display = "flex";
+      }
+      else {
+        document.getElementById("menu-link-" + id).innerHTML = '<i  class="fa-solid fa-angles-right"></i>'
+        document.getElementById("menu-link-" + id).dataset.status = 0
+        document.getElementById("menu-content-" + id).style.display = "none";
+      }
+    }
+
+    window.onload = async function () {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "../login.html";
+        return;
+      }
+
+      let checkedToken = await checkToken(token);
+      if (!checkedToken) {
+        window.location.href = "../login.html";
+        return;
+      }
+
+      await loadFoldersToDropdown();
+      await displayTrash();
+    };
+
+    async function loadFoldersToDropdown() {
+      try {
+        const token = localStorage.getItem("token");
+        const dropdownList = document.getElementById("folderDropdownList");
+
+        if (!dropdownList) return;
+
+        const response = await fetch("http://localhost:5025/api/Folder", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          }
+        });
+
+        if (response.ok) {
+          const folders = await response.json();
+          dropdownList.innerHTML = "";
+
+          if (folders && folders.length > 0) {
+            folders.forEach(folder => {
+              const folderItem = document.createElement("a");
+              folderItem.href = `../file/allFleInFolder.html?id=${folder.id}`;
+              folderItem.className = "menu-item";
+              folderItem.style.cssText = "display: block; width: 100%; padding: 8px 10px 8px 10%; text-decoration: none; color: inherit;";
+              folderItem.innerHTML = `
+                <i class="fa-solid fa-folder" style="color: #666; font-size: 12px;"></i> 
+                <span style="padding-left: 8px; font-size: 13px;">${folder.name || 'Unnamed Folder'}</span>
+              `;
+              dropdownList.appendChild(folderItem);
+            });
+          } else {
+            dropdownList.innerHTML = `
+              <div class="text-center" style="padding: 10px; font-size: 12px; color: #999;">
+                <i class="fa-solid fa-folder-open"></i> No folders yet
+              </div>
+            `;
+          }
+        }
+      } catch (error) {
+        console.error("Error loading folders to dropdown:", error);
+      }
+    }
+
+    async function checkToken(token) {
+      let url = "http://localhost:5025/api/Account/CheckToken";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: null,
+      });
+      return response.ok;
+    }
+    async function GetDeletedFiles() {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          window.location.href = "../login.html";
+          return;
+        }
+
+        let url = "http://localhost:5025/api/File/Trash";
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        if (response.ok) {
+          const files = await response.json();
+          console.log("Deleted files from API:", files); // Debug log
+          return Array.isArray(files) ? files : [];
+        } else if (response.status === 401) {
+          toastr.error("Session expired. Please login again.");
+          setTimeout(() => {
+            window.location.href = "../login.html";
+          }, 2000);
+          return [];
+        } else {
+          console.error("Failed to load deleted files");
+          return [];
+        }
+      } catch (error) {
+        console.error("Error loading deleted files:", error);
+        return [];
+      }
+    }
+
+    async function GetDeletedFolders() {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          window.location.href = "../login.html";
+          return;
+        }
+
+        let url = "http://localhost:5025/api/Folder/GetFolderDeleted";
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        if (response.ok) {
+          const folders = await response.json();
+          return Array.isArray(folders) ? folders : [];
+        } else if (response.status === 401) {
+          toastr.error("Session expired. Please login again.");
+          setTimeout(() => {
+            window.location.href = "../login.html";
+          }, 2000);
+          return [];
+        } else {
+          console.error("Failed to load deleted folders");
+          return [];
+        }
+      } catch (error) {
+        console.error("Error loading deleted folders:", error);
+        return [];
+      }
+    }
+    async function restoreFromTrash(fileId, fileName) {
+      if (!confirm(`Are you sure you want to restore "${fileName}"?`)) {
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          toastr.error("You must be logged in");
+          window.location.href = "../login.html";
+          return;
+        }
+
+        let url = `http://localhost:5025/api/file?fileId=${fileId}`;
+        const response = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        if (response.ok) {
+          toastr.success(`File "${fileName}" restored successfully!`);
+          // Reload both trash list and files dropdown
+          await Promise.all([displayTrash(), loadFilesToDropdown()]);
+        } else if (response.status === 401) {
+          toastr.error("Session expired. Please login again.");
+          setTimeout(() => {
+            window.location.href = "../login.html";
+          }, 2000);
+        } else if (response.status === 404) {
+          toastr.error("File not found");
+        } else {
+          const errorText = await response.text();
+          toastr.error(errorText || "Failed to restore file. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error restoring file:", error);
+        toastr.error("Network error. Please check your connection and try again.");
+      }
+    }
+
+    async function displayTrash() {
+      const trashListContainer = document.getElementById("trash-list");
+      
+      try {
+        // Load both folders and files in parallel
+        const [folders, files] = await Promise.all([GetDeletedFolders(), GetDeletedFiles()]);
+        
+        // Clear loading spinner
+        trashListContainer.innerHTML = "";
+
+        const allItems = [];
+        
+        // Add folders to items array
+        if (folders && folders.length > 0) {
+          folders.forEach(folder => {
+            allItems.push({
+              id: folder.id,
+              name: folder.name || 'Unnamed Folder',
+              type: 'folder',
+              icon: 'fa-folder',
+              color: '#FFA500'
+            });
+          });
+        }
+
+        // Add files to items array
+        if (files && files.length > 0) {
+          files.forEach(file => {
+            console.log("Processing file:", file); // Debug log
+            allItems.push({
+              id: file.fileId || file.id || file.Id || file.FileId,
+              name: file.name || file.fileName || 'Unnamed File',
+              type: 'file',
+              icon: 'fa-file',
+              color: '#4285F4',
+              folderId: file.folderId || file.FolderId || file.folder_id || ''
+            });
+          });
+        }
+
+        if (allItems.length === 0) {
+          trashListContainer.innerHTML = `
+            <div class="col-lg-12 text-center" style="padding: 50px;">
+              <i class="fa-solid fa-trash" style="font-size: 64px; color: #ccc;"></i>
+              <h4 class="mt-3 text-muted">Trash is empty</h4>
+              <p class="text-muted">No deleted items found</p>
+              <a href="all.html" class="btn btn-primary mt-3">
+                <i class="fa-solid fa-folder"></i> Go to Folders
+              </a>
+            </div>
+          `;
+          return;
+        }
+
+        // Create compact list view (Google Drive style)
+        let listHTML = `
+          <div class="col-lg-12">
+            <div class="table-responsive">
+              <table class="table table-hover" style="font-size: 14px;">
+                <thead style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                  <tr>
+                    <th style="width: 50%; padding: 12px 16px;">Name</th>
+                    <th style="width: 15%; padding: 12px 16px;">Type</th>
+                    <th style="width: 35%; padding: 12px 16px; text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+        `;
+
+        allItems.forEach(item => {
+          const restoreFunc = item.type === 'folder' ? 'restoreFolder' : 'restoreFile';
+          const deleteFunc = item.type === 'folder' ? 'permanentDeleteFolder' : 'permanentDeleteFile';
+          
+          // For files, pass folderId as third parameter
+          const restoreParams = item.type === 'folder' 
+            ? `'${item.id}', '${item.name.replace(/'/g, "\\'")}'`
+            : `'${item.id}', '${item.name.replace(/'/g, "\\'")}', '${item.folderId || ''}'`;
+          
+          listHTML += `
+            <tr style="border-bottom: 1px solid #f0f0f0; transition: background-color 0.2s;">
+              <td style="padding: 12px 16px;">
+                <i class="fa-solid ${item.icon}" style="color: ${item.color}; margin-right: 10px; font-size: 16px;"></i>
+                <span style="font-weight: 500;">${item.name}</span>
+              </td>
+              <td style="padding: 12px 16px; color: #666;">
+                <span class="badge bg-secondary">${item.type === 'folder' ? 'Folder' : 'File'}</span>
+              </td>
+              <td style="padding: 12px 16px; text-align: right;">
+                <button onclick="${restoreFunc}(${restoreParams})" 
+                        class="btn btn-sm btn-outline-success" 
+                        style="margin-right: 8px; padding: 4px 12px; font-size: 13px;">
+                  <i class="fa-solid fa-rotate-left"></i> Restore
+                </button>
+                <button onclick="${deleteFunc}('${item.id}', '${item.name.replace(/'/g, "\\'")}')" 
+                        class="btn btn-sm btn-outline-danger" 
+                        style="padding: 4px 12px; font-size: 13px;">
+                  <i class="fa-solid fa-trash-can"></i> Delete
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+
+        listHTML += `
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+
+        trashListContainer.innerHTML = listHTML;
+
+      } catch (error) {
+        console.error("Error displaying trash:", error);
+        trashListContainer.innerHTML = `
+          <div class="col-lg-12 text-center" style="padding: 50px;">
+            <i class="fa-solid fa-exclamation-triangle" style="font-size: 64px; color: #dc3545;"></i>
+            <h4 class="mt-3 text-danger">Network Error</h4>
+            <p class="text-muted">Please check your connection and try again</p>
+            <button class="btn btn-primary mt-3" onclick="displayTrash()">
+              <i class="fa-solid fa-refresh"></i> Retry
+            </button>
+          </div>
+        `;
+        toastr.error("Failed to load trash. Please try again.");
+      }
+    }
+
+    async function restoreFolder(folderId, folderName) {
+      if (!confirm(`Are you sure you want to restore "${folderName}"?`)) {
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          toastr.error("You must be logged in");
+          window.location.href = "../login.html";
+          return;
+        }
+
+        let url = `http://localhost:5025/api/Folder?folderId=${folderId}`;
+        const response = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        if (response.ok) {
+          toastr.success(`Folder "${folderName}" restored successfully!`);
+          // Reload both trash list and folders dropdown
+          await Promise.all([displayTrash(), loadFoldersToDropdown()]);
+        } else if (response.status === 401) {
+          toastr.error("Session expired. Please login again.");
+          setTimeout(() => {
+            window.location.href = "../login.html";
+          }, 2000);
+        } else if (response.status === 404) {
+          toastr.error("Folder not found");
+        } else {
+          const errorText = await response.text();
+          toastr.error(errorText || "Failed to restore folder. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error restoring folder:", error);
+        toastr.error("Network error. Please check your connection and try again.");
+      }
+    }
+
+    async function permanentDeleteFolder(folderId, folderName) {
+      if (!confirm(`Are you sure you want to PERMANENTLY delete "${folderName}"? This action cannot be undone!`)) {
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          toastr.error("You must be logged in");
+          window.location.href = "../login.html";
+          return;
+        }
+
+        // TODO: Implement permanent delete API endpoint
+        let url = `http://localhost:5025/api/Folder/PermanentDelete?folderId=${folderId}`;
+        const response = await fetch(url, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        if (response.ok) {
+          toastr.success(`Folder "${folderName}" permanently deleted!`);
+          await displayTrash();
+        } else {
+          const errorText = await response.text();
+          toastr.error(errorText || "Failed to delete folder. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error deleting folder:", error);
+        toastr.error("Network error. Please check your connection and try again.");
+      }
+    }
+
+    async function logout() {
+      if (!confirm("Are you sure you want to logout?")) {
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          toastr.warning("No active session found");
+          window.location.href = "../login.html";
+          return;
+        }
+
+        const response = await fetch("http://localhost:5025/api/Account/Logout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          }
+        });
+
+        if (response.ok) {
+          localStorage.removeItem("token");
+          toastr.success("Logged out successfully!");
+          setTimeout(() => {
+            window.location.href = "../login.html";
+          }, 1000);
+        } else if (response.status === 401) {
+          localStorage.removeItem("token");
+          toastr.warning("Session expired. Redirecting to login...");
+          setTimeout(() => {
+            window.location.href = "../login.html";
+          }, 1000);
+        } else {
+          const errorText = await response.text();
+          toastr.error(errorText || "Logout failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error during logout:", error);
+        localStorage.removeItem("token");
+        toastr.warning("Network error. Logged out locally.");
+        setTimeout(() => {
+          window.location.href = "../login.html";
+        }, 1500);
+      }
+    }
+
+    async function restoreFile(fileId, fileName, folderId) {
+      if (!confirm(`Are you sure you want to restore "${fileName}"?`)) {
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          toastr.error("You must be logged in");
+          window.location.href = "../login.html";
+          return;
+        }
+
+        // If folderId is empty or undefined, prompt user to select a folder
+        if (!folderId) {
+          toastr.error("Cannot restore file: Folder ID is missing. Please contact support.");
+          console.error("Missing folderId for file:", fileId);
+          return;
+        }
+
+        let url = `http://localhost:5025/api/File/restore?fileId=${fileId}&folderId=${folderId}`;
+        const response = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        if (response.ok) {
+          toastr.success(`File "${fileName}" restored successfully!`);
+          await displayTrash();
+        } else if (response.status === 401) {
+          toastr.error("Session expired. Please login again.");
+          setTimeout(() => {
+            window.location.href = "../login.html";
+          }, 2000);
+        } else if (response.status === 404) {
+          toastr.error("File not found");
+        } else if (response.status === 400) {
+          const errorText = await response.text();
+          toastr.error(errorText || "Invalid request. Please check the file and folder.");
+        } else {
+          const errorText = await response.text();
+          toastr.error(errorText || "Failed to restore file. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error restoring file:", error);
+        toastr.error("Network error. Please check your connection and try again.");
+      }
+    }
+
+    async function permanentDeleteFile(fileId, fileName) {
+      if (!confirm(`Are you sure you want to PERMANENTLY delete "${fileName}"? This action cannot be undone!`)) {
+        return;
+      }
+
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          toastr.error("You must be logged in");
+          window.location.href = "../login.html";
+          return;
+        }
+
+        let url = `http://localhost:5025/api/File/PermanentDelete?fileId=${fileId}`;
+        const response = await fetch(url, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        if (response.ok) {
+          toastr.success(`File "${fileName}" permanently deleted!`);
+          await displayTrash();
+        } else {
+          const errorText = await response.text();
+          toastr.error(errorText || "Failed to delete file. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error deleting file:", error);
+        toastr.error("Network error. Please check your connection and try again.");
+      }
+    }
+
+    function changePassword() {
+      toastr.info("Change password feature - Coming soon!");
+    }
+  </script>
+</body>
+
+</html>

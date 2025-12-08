@@ -36,7 +36,7 @@
         <div class="col-lg-2">
           <div class="row sidebar"> 
             <div class="col-lg-12 text-center">
-              <a style="text-decoration: none;" href="#"><h2 class="logo">FileShare</h2></a>
+              <a style="text-decoration: none;" href="index.html"><h2 class="logo">FileShare</h2></a>
             </div>
             <div class="divider"></div>
             <div class="col-lg-12 menu">
@@ -64,10 +64,10 @@
               </div>
               <div id="menu-content-2" style="display: none;" class="col-lg-10 menu-content">
                 <div class="row col-lg-12">
-                   <a href="/folder/create.html" class="menu-item col-lg-12">
+                   <a href="folder/create.html" class="menu-item col-lg-12">
                     <span><i class="fa-solid fa-minus"></i> <span style="padding-left: 5%;">Add New Folder</span>
                   </a>
-                   <a href="/folder/all.html" class="menu-item col-lg-12">
+                   <a href="folder/all.html" class="menu-item col-lg-12">
                     <span><i class="fa-solid fa-minus"></i> <span style="padding-left: 5%;">List All</span>
                   </a>
                 </div>
@@ -97,25 +97,46 @@
             padding-right: 0px;
           "
         >
-          <div class="main-navbar col-lg-12 row">
-            <div class="col-lg-6">
-              <div class="row col-lg-12">
-<div class="col-lg-1"><i style="font-size: 20px;padding-top: 10px;" class="fa-solid fa-bars"></i></div>
-<div class="col-lg-5">
-  <div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1" style="background-color:white;"><i class="fa-solid fa-magnifying-glass"></i></span>
-  <input  type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-</div>
-</div>
+          <div class="main-navbar col-lg-12">
+            <div class="row align-items-center" style="width: 100%;">
+              <div class="col-lg-6">
+                <div class="row align-items-center">
+                  <div class="col-lg-1"><i style="font-size: 20px;" class="fa-solid fa-bars"></i></div>
+                  <div class="col-lg-7">
+                    <div class="input-group">
+                      <span class="input-group-text" id="basic-addon1" style="background-color:white;"><i class="fa-solid fa-magnifying-glass"></i></span>
+                      <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
+                    </div>
+                  </div>
+                </div>
               </div>
-
-            </div>
-            <div class="col-lg-6">
-              
+              <div class="col-lg-6">
+                <div class="d-flex justify-content-end align-items-center" style="padding-right: 20px;">
+                  <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 50px; padding: 8px 20px; border: 1px solid #ddd;">
+                      <i class="fa-solid fa-user-circle" style="font-size: 20px; margin-right: 8px; color: #0d6efd;"></i>
+                      <span id="username-display" style="font-weight: 500;">User</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenuDropdown" style="min-width: 200px;">
+                      <li>
+                        <a class="dropdown-item" href="#" onclick="changePassword(); return false;">
+                          <i class="fa-solid fa-key" style="margin-right: 8px;"></i> Change Password
+                        </a>
+                      </li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li>
+                        <a class="dropdown-item text-danger" href="#" onclick="logout(); return false;">
+                          <i class="fa-solid fa-right-from-bracket" style="margin-right: 8px;"></i> Logout
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="row main-container" style="padding:0ox;border-radius:20px ;width: 98%;height: 1000px;background-color: white;margin-top:100px;margin-left: 10px;margin-right: 10px;margin-bottom: 20px;">
+          <div class="row main-container" style="padding:20px;border-radius:20px ;width: 98%;height: 1000px;background-color: white;margin-top:100px;margin-left: 10px;margin-right: 10px;margin-bottom: 20px;">
             <div class="col-lg-12 row">
               <h2 class="content-title">Create New Folder</h2>
             </div>
@@ -173,10 +194,13 @@
       window.onload = async function () {
         const token = localStorage.getItem("token");
         if (!token) {
-          let checkedToken = await checkToken(token);
-          if (!checkedToken) {
-            window.location.href = "login.html";
-          }
+          window.location.href = "login.html";
+          return;
+        }
+        
+        let checkedToken = await checkToken(token);
+        if (!checkedToken) {
+          window.location.href = "login.html";
         }
       };
 
@@ -195,6 +219,57 @@
         } else {
           return false;
         }
+      }
+
+      async function logout() {
+        if (!confirm("Are you sure you want to logout?")) {
+          return;
+        }
+
+        try {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            toastr.warning("No active session found");
+            window.location.href = "login.html";
+            return;
+          }
+
+          const response = await fetch("http://localhost:5025/api/Account/Logout", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            }
+          });
+
+          if (response.ok) {
+            localStorage.removeItem("token");
+            toastr.success("Logged out successfully!");
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 1000);
+          } else if (response.status === 401) {
+            localStorage.removeItem("token");
+            toastr.warning("Session expired. Redirecting to login...");
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 1000);
+          } else {
+            const errorText = await response.text();
+            toastr.error(errorText || "Logout failed. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error during logout:", error);
+          localStorage.removeItem("token");
+          toastr.warning("Network error. Logged out locally.");
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 1500);
+        }
+      }
+
+      function changePassword() {
+        toastr.info("Change password feature - Coming soon!");
       }
     </script>
   </body>

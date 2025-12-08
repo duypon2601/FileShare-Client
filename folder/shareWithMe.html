@@ -30,23 +30,6 @@
           </div>
           <div class="divider"></div>
           <div class="col-lg-12 menu">
-            <div class="col-lg-8">
-              <a class="row menu-link" onclick="showMenu(1)"
-                style="box-shadow:2px 2px grey;border-radius:10px ;background-color:#e7f3ff;padding-left: 5%;">
-                <div class="col-lg-9"><span><i class="fa-solid fa-plus"></i></span> <span
-                    style="padding-left: 5%;">NEW</span></div>
-                <div id="menu-link-1" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
-              </a>
-
-            </div>
-            <div id="menu-content-1" style="display: none;" class="col-lg-10 menu-content">
-              <a class="menu-item col-lg-12"
-                onclick="window.location.href='../file/upload.html?id='+new URLSearchParams(window.location.search).get('id')">
-                <span><i class="fa-solid fa-minus "></i> <span style="padding-left: 5%;">Up Load File</span>
-              </a>
-            </div>
-          </div>
-          <div class="col-lg-12 menu">
             <div class="col-lg-12">
               <a class="row menu-link" onclick="showMenu(1)">
                 <div class="col-lg-9"><span><i class="fa-solid fa-house-laptop"></i></span> <span
@@ -78,9 +61,6 @@
                 </a>
                 <a href="all.html" class="menu-item col-lg-12">
                   <span><i class="fa-solid fa-minus"></i> <span style="padding-left: 5%;">List All</span>
-                </a>
-                <a href="shareWithMe.html" class="menu-item col-lg-12">
-                  <span><i class="fa-solid fa-minus"></i> <span style="padding-left: 5%;">Share With Me</span>
                 </a>
                 <div class="menu-item col-lg-12">
                   <label>
@@ -436,7 +416,7 @@
           window.location.href = "../login.html";
           return;
         }
-        let url = "http://localhost:5025/api/Folder";
+        let url = "http://localhost:5025/api/Folder/GetFolderByPermission";
         const response = await fetch(url, {
           method: "GET",
           headers: {
@@ -457,40 +437,18 @@
             folders.forEach(folder => {
               const folderCard = `
                   <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="card h-100" style="cursor: pointer; width: 100%; ">
-                      <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #f8f9fa; padding: 10px 15px;">
-                        <small class="text-truncate" style="flex: 1; text-align: left; font-weight: 500;">${folder.name}</small>
-                        
-                        <button class="btn btn-light btn-sm ms-2" type="button" id="userMenuDropdown" 
-                          data-bs-toggle="dropdown" aria-expanded="false" style="padding: 2px 8px;">
-                          <i class="fa-solid fa-ellipsis-vertical"></i>
-                              
-                              
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenuDropdown"
-                              style="min-width: 200px;">
-                              <li>
-                                <a class="dropdown-item" href="#" onclick="deleteFolder('${folder.id}', '${folder.name}'); return false;">
-                                  <i class="fa-solid fa-trash" style="margin-right: 8px;"></i> Move to Trash
-                                </a>
-                              </li>
-                              <li>
-                                <hr class="dropdown-divider">
-                              </li>
-                              <li>
-                                <a class="dropdown-item text-primary" href="#" onclick="shareFolder('${folder.id}', '${folder.name}'); return false;">
-                                  <i class="fa-solid fa-share-nodes" style="margin-right: 8px;"></i> Share
-                                </a>
-                              </li>
-                            </ul>
-                      </div>
+                    <div class="card h-100" style="cursor: pointer;">
                       <div class="card-body"  href="#" onclick="openFolder('${folder.id}'); return false;">
                         <div class="text-center mb-3">
                           <i class="fa-solid fa-folder" style="font-size: 48px; color: #0d6efd;"></i>
                         </div>
                         <h5 class="card-title text-center">${folder.name || 'Unnamed Folder'}</h5>
                       </div>
-                      
+                      <div class="card-footer text-center">
+                        <button onclick="openFolder('${folder.id}')" class="btn btn-sm btn-primary">
+                          <i class="fa-solid fa-folder-open"></i> Open
+                        </button>
+                      </div>
                     </div>
                   </div>
                 `;
@@ -549,16 +507,14 @@
         toastr.error("Failed to load folders. Please try again.");
       }
     }
+    
 
-
-    function openFolder(folderId) {
-      if (!folderId) {
-        toastr.error("Invalid folder ID");
-        return;
-      }
-      // Redirect to file list page for this folder
+    async function openFolder(folderId) {
+      // No need to check permission again - folders are already filtered by GetFolderByPermission API
+      // Just navigate directly to the folder
       window.location.href = `../file/allFleInFolder.html?id=${folderId}`;
     }
+
 
     async function deleteFolder(folderId, folderName) {
       if (!confirm(`Are you sure you want to delete "${folderName}"?`)) {
@@ -601,14 +557,6 @@
         console.error("Error deleting folder:", error);
         toastr.error("Network error. Please check your connection and try again.");
       }
-    }
-    function shareFolder(folderId, folderName) {
-      if (!folderId) {
-        toastr.error("Invalid folder ID");
-        return;
-      }
-      // Redirect to share page with folder ID
-      window.location.href = `share.html?id=${folderId}`;
     }
 
     async function logout() {

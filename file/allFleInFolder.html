@@ -24,28 +24,9 @@
       <div class="col-lg-2">
         <div class="row sidebar">
           <div class="col-lg-12 text-center">
-            <a style="text-decoration: none;" href="../index.html">
-              <h2 class="logo">FileShare</h2>
-            </a>
+            <h2 class="logo">FileShare</h2>
           </div>
           <div class="divider"></div>
-          <div class="col-lg-12 menu">
-            <div class="col-lg-8">
-              <a class="row menu-link" onclick="showMenu(1)"
-                style="box-shadow:2px 2px grey;border-radius:10px ;background-color:#e7f3ff;padding-left: 5%;">
-                <div class="col-lg-9"><span><i class="fa-solid fa-plus"></i></span> <span
-                    style="padding-left: 5%;">NEW</span></div>
-                <div id="menu-link-1" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
-              </a>
-
-            </div>
-            <div id="menu-content-1" style="display: none;" class="col-lg-10 menu-content">
-              <a class="menu-item col-lg-12"
-                onclick="window.location.href='../file/upload.html?id='+new URLSearchParams(window.location.search).get('id')">
-                <span><i class="fa-solid fa-minus "></i> <span style="padding-left: 5%;">Up Load File</span>
-              </a>
-            </div>
-          </div>
           <div class="col-lg-12 menu">
             <div class="col-lg-12">
               <a class="row menu-link" onclick="showMenu(1)">
@@ -53,7 +34,6 @@
                     style="padding-left: 5%;">Home</span></div>
                 <div id="menu-link-1" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
               </a>
-
             </div>
             <div id="menu-content-1" style="display: none;" class="col-lg-10 menu-content">
               <a class="menu-item col-lg-12">
@@ -73,23 +53,14 @@
             </div>
             <div id="menu-content-2" style="display: none;" class="col-lg-10 menu-content">
               <div class="row col-lg-12">
-                <a href="create.html" class="menu-item col-lg-12">
-                  <span><i class="fa-solid fa-minus"></i> <span style="padding-left: 5%;">Add New Folder</span>
+                <a href="../folder/create.html" class="menu-item col-lg-12">
+                  <span><i class="fa-solid fa-plus"></i> <span style="padding-left: 5%;">Add New Folder</span>
                 </a>
-                <a href="all.html" class="menu-item col-lg-12">
-                  <span><i class="fa-solid fa-minus"></i> <span style="padding-left: 5%;">List All</span>
+                <a href="../folder/all.html" class="menu-item col-lg-12">
+                  <span><i class="fa-solid fa-list"></i> <span style="padding-left: 5%;">List All</span>
                 </a>
-                <a href="shareWithMe.html" class="menu-item col-lg-12">
-                  <span><i class="fa-solid fa-minus"></i> <span style="padding-left: 5%;">Share With Me</span>
-                </a>
-                <div class="menu-item col-lg-12">
-                  <label>
-                    <select id="folderDropdown" class="form-select form-select-sm"
-                      onchange="navigateToFolder(this.value)">
-                      <option value="">Loading Folder...</option>
-                    </select>
-                  </label>
-                </div>
+
+
               </div>
             </div>
           </div>
@@ -97,7 +68,7 @@
           <div class="col-lg-12 menu">
             <div class="col-lg-12">
               <a class="row menu-link" onclick="showMenu(3)">
-                <div class="col-lg-9"><span><i class="fa-solid fa-folder-open"></i></span> <span
+                <div class="col-lg-9"><span><i class=" fa-solid fa-folder-open"></i></span> <span
                     style="padding-left: 5%;">My Folders</span></div>
                 <div id="menu-link-3" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
               </a>
@@ -106,54 +77,13 @@
             <div id="menu-content-3" style="display: none;" class="col-lg-10 menu-content">
 
 
-              <div id="folderDropdownList" class="col-lg-12">
-                <div class="text-center" style="padding: 10px; font-size: 12px; color: #999;">
-                  <i class="fa-solid fa-spinner fa-spin"></i> Loading...
+              <div id="folderDropdownList" class="col-lg-12 row">
+                <div class="text-center col-lg-12" style="padding: 10px; font-size: 12px; color: #999;">
+                  <i class="col-lg-12 fa-solid fa-spinner fa-spin"></i> Loading...
                 </div>
               </div>
             </div>
           </div>
-
-          <div class="col-lg-12 menu">
-            <div class="col-lg-12">
-              <a class="row menu-link" onclick="showMenu(4)">
-                <div class="col-lg-9"><span><i class="fa-solid fa-folder-open"></i></span> <span
-                    style="padding-left: 5%;">Share With Me</span></div>
-                <div id="menu-link-4" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
-              </a>
-
-            </div>
-            <div id="menu-content-4" style="display: none;" class="col-lg-10 menu-content">
-
-
-              <div id="sharedFolderDropdownList" class="col-lg-12">
-                <div class="text-center" style="padding: 10px; font-size: 12px; color: #999;">
-                  <i class="fa-solid fa-spinner fa-spin"></i> Loading...
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-12 menu">
-            <div class="col-lg-12">
-              <a class="row menu-link" onclick="showMenu(5)">
-                <div class="col-lg-9"><span><i class="fa-solid fa-trash"></i></span> <span
-                    style="padding-left: 5%;">Trash Bin</span></div>
-                <div id="menu-link-5" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
-              </a>
-
-            </div>
-            <div id="menu-content-5" style="display: none;" class="col-lg-10 menu-content">
-              <div class="row col-lg-12">
-                <a href="trash.html" class="menu-item col-lg-12">
-                  <span><i class="fa-solid fa-trash-can"></i> <span style="padding-left: 5%;">View Trash</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-
-
         </div>
       </div>
       <div class="col-lg-10 main" style="
@@ -210,8 +140,13 @@
 
         <div class="row main-container"
           style="padding:20px;border-radius:20px ;width: 98%;min-height: 600px;background-color: white;margin-top:100px;margin-left: 10px;margin-right: 10px;margin-bottom: 20px;">
-          <div class="col-lg-12 row">
-            <h2 class="content-title">All Folders</h2>
+          <div class="col-lg-8 row">
+            <h2 id="folder-title" class="card-title text-center">Folder </h2>
+            <button id="uploadbtn" class="col-lg-4 btn btn-primary"
+              style="position: absolute; right: 30px;display: none;"
+              onclick="window.location.href='../file/upload.html?id='+new URLSearchParams(window.location.search).get('id')">
+              <i class="fa-solid fa-upload"></i> Upload File
+            </button>
           </div>
           <div class="col-lg-12 row" style="margin-top:20px;">
             <div id="folder-list" class="row">
@@ -272,75 +207,27 @@
         window.location.href = "../login.html";
         return;
       }
+      await CheckOwner();
       await loadFoldersToDropdown();
-      await loadShareFoldersToDropdown();
-      await GetAllFolder();
+      await getFolderInfo();
+      await GetByFolder(true);
     };
-
-    async function loadShareFoldersToDropdown() {
-      try {
-        const token = localStorage.getItem("token");
-        const dropdownList = document.getElementById("sharedFolderDropdownList");
-        if (!dropdownList) return;
-
-        const response = await fetch("http://localhost:5025/api/Folder/GetFolderByPermission", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          }
-        });
-
-        if (response.ok) {
-          const folders = await response.json();
-
-          dropdownList.innerHTML = "";
-
-          if (folders && folders.length > 0) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const currentFolderId = urlParams.get('id');
-
-            folders.forEach(folder => {
-              const isActive = currentFolderId === folder.id;
-              const folderItem = document.createElement("a");
-              folderItem.href = `../file/allFleInFolder.html?id=${folder.id}`;
-              folderItem.className = "menu-item";
-              folderItem.style.cssText = isActive
-                ? "display: block; width: 100%; background-color: #e7f3ff; border-left: 3px solid #0d6efd; padding: 8px 10px 8px 10%; text-decoration: none; color: inherit;"
-                : "display: block; width: 100%; padding: 8px 10px 8px 10%; text-decoration: none; color: inherit;";
-
-              folderItem.innerHTML = `
-                <i class="fa-solid fa-folder" style="color: ${isActive ? '#0d6efd' : '#666'}; font-size: 12px;"></i> 
-                <span style="padding-left: 8px; font-size: 13px;">${folder.name || 'Unnamed Folder'}</span>
-              `;
-
-              dropdownList.appendChild(folderItem);
-            });
-          } else {
-            dropdownList.innerHTML = `
-              <div class="text-center" style="padding: 10px; font-size: 12px; color: #999;">
-                <i class="fa-solid fa-folder-open"></i> No shared folders yet
-              </div>
-            `;
-          }
-        } else {
-          dropdownList.innerHTML = `
-            <div class="text-center" style="padding: 10px; font-size: 12px; color: #dc3545;">
-              <i class="fa-solid fa-exclamation-triangle"></i> Failed to load
-            </div>
-          `;
-          console.error("Failed to load shared folders:", response.status);
+    async function CheckOwner() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentFolderId = urlParams.get('id');
+      const token = localStorage.getItem("token");
+      const response = await fetch(`http://localhost:5025/api/Folder/CheckOwner?folderId=${currentFolderId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
         }
-      } catch (error) {
-        console.error("Error loading shared folders to dropdown:", error);
-        const dropdownList = document.getElementById("sharedFolderDropdownList");
-        if (dropdownList) {
-          dropdownList.innerHTML = `
-            <div class="text-center" style="padding: 10px; font-size: 12px; color: #dc3545;">
-              <i class="fa-solid fa-exclamation-triangle"></i> Error loading
-            </div>
-          `;
-        }
+      });
+      if (response.ok) {
+
+
+        document.getElementById("uploadbtn").style.display = "block";
+
       }
     }
     async function loadFoldersToDropdown() {
@@ -361,6 +248,7 @@
         if (response.ok) {
           const folders = await response.json();
 
+          // Clear loading
           dropdownList.innerHTML = "";
 
           if (folders && folders.length > 0) {
@@ -370,15 +258,17 @@
             folders.forEach(folder => {
               const isActive = currentFolderId === folder.id;
               const folderItem = document.createElement("a");
-              folderItem.href = `../file/allFleInFolder.html?id=${folder.id}`;
-              folderItem.className = "menu-item";
+              folderItem.href = `allFleInFolder.html?id=${folder.id}`;
+              folderItem.className = "menu-item col-lg-12";
               folderItem.style.cssText = isActive
-                ? "display: block; width: 100%; background-color: #e7f3ff; border-left: 3px solid #0d6efd; padding: 8px 10px 8px 10%; text-decoration: none; color: inherit;"
-                : "display: block; width: 100%; padding: 8px 10px 8px 10%; text-decoration: none; color: inherit;";
+                ? "background-color: #e7f3ff; border-left: 3px solid #0d6efd; padding-left: 8%;"
+                : "padding-left: 8%;";
 
               folderItem.innerHTML = `
-                <i class="fa-solid fa-folder" style="color: ${isActive ? '#0d6efd' : '#666'}; font-size: 12px;"></i> 
-                <span style="padding-left: 8px; font-size: 13px;">${folder.name || 'Unnamed Folder'}</span>
+                <span>
+                  <i class=" fa-solid fa-folder" style="color: ${isActive ? '#0d6efd' : '#666'};"></i> 
+                  <span style="padding-left: 3%; font-size: 13px;">${folder.name || 'Unnamed Folder'}</span>
+                </span>
               `;
 
               dropdownList.appendChild(folderItem);
@@ -411,6 +301,57 @@
       }
     }
 
+    async function getFolderInfo() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const folderId = urlParams.get('id');
+
+        if (!folderId) {
+          return;
+        }
+
+        const token = localStorage.getItem("token");
+        let url = `http://localhost:5025/api/Folder?folderId=${folderId}`;
+
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        if (response.ok) {
+          let folder = await response.json();
+          console.log("Folder data:", folder); // Debug log
+
+          // If response is an array, find the folder with matching id
+          if (Array.isArray(folder)) {
+            folder = folder.find(f => f.id === folderId);
+          }
+
+          if (!folder) {
+            console.error("Folder not found in response");
+            document.getElementById("folder-title").textContent = "Folder Details";
+            return;
+          }
+
+          // Try different possible field names
+          const folderName = folder?.name || folder?.folderName || folder?.title || folder?.Name || folder?.FolderName;
+
+          if (folderName) {
+            document.getElementById("folder-title").textContent = `Folder: ${folderName}`;
+          } else {
+            console.warn("Folder name not found in response. Full data:", JSON.stringify(folder));
+            document.getElementById("folder-title").textContent = "Folder Details";
+          }
+        } else {
+          console.error("API error:", response.status, response.statusText);
+        }
+      } catch (error) {
+        console.error("Error loading folder info:", error);
+      }
+    }
 
     async function checkToken(token) {
       let url = "http://localhost:5025/api/Account/CheckToken";
@@ -429,14 +370,87 @@
       }
     }
 
-    async function GetAllFolder() {
+    async function downloadFile(fileId, filename) {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
           window.location.href = "../login.html";
           return;
         }
-        let url = "http://localhost:5025/api/Folder";
+        const urlParams = new URLSearchParams(window.location.search);
+        const folderId = urlParams.get('id');
+
+        if (!folderId) {
+          toastr.error("Folder ID is missing");
+          window.location.href = "../folder/all.html";
+          return;
+        }
+        let url = `http://localhost:5025/api/File/Download?fileId=${fileId}&folderId=${folderId}`;
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        });
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', filename);
+          document.body.appendChild(link);
+          link.click();
+          link.parentNode.removeChild(link);
+          window.URL.revokeObjectURL(url);
+          toastr.success("File download started");
+        } else {
+          let errorMessage = "Failed to download file";
+
+          if (response.status === 401) {
+            toastr.error("Session expired. Please login again.");
+            setTimeout(() => {
+              window.location.href = "../login.html";
+            }, 2000);
+            return;
+          } else if (response.status === 404) {
+            errorMessage = "File not found";
+          }
+
+          toastr.error(errorMessage);
+        }
+
+
+
+      } catch (error) {
+        console.error("Error during file download:", error);
+        toastr.error("Network error. Please try again.");
+      }
+    }
+
+
+    async function GetByFolder() {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          window.location.href = "../login.html";
+          return;
+        }
+
+
+        // Get folder ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const folderId = urlParams.get('id');
+
+        if (!folderId) {
+          toastr.error("Folder ID is missing");
+          window.location.href = "../folder/all.html";
+          return;
+        }
+
+
+        let url = `http://localhost:5025/api/File/GetByFolder?folderId=${folderId}`;
         const response = await fetch(url, {
           method: "GET",
           headers: {
@@ -448,29 +462,39 @@
         const folderListContainer = document.getElementById("folder-list");
 
         if (response.ok) {
-          const folders = await response.json();
+          const responseText = await response.text();
+          let files = [];
+          let fileResult;
+          // Try to parse as JSON, if it fails, treat as empty array
+          try {
+            fileResult = JSON.parse(responseText);
+            files = fileResult;
+          } catch (e) {
+            console.log("Response is not JSON:", responseText);
+            files = [];
+          }
 
           // Clear loading spinner
           folderListContainer.innerHTML = "";
 
-          if (folders && folders.length > 0) {
-            folders.forEach(folder => {
-              const folderCard = `
+          if (files && Array.isArray(files) && files.length > 0) {
+            files.forEach(file => {
+              const fileCard = `
                   <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="card h-100" style="cursor: pointer; width: 100%; ">
-                      <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #f8f9fa; padding: 10px 15px;">
-                        <small class="text-truncate" style="flex: 1; text-align: left; font-weight: 500;">${folder.name}</small>
-                        
-                        <button class="btn btn-light btn-sm ms-2" type="button" id="userMenuDropdown" 
-                          data-bs-toggle="dropdown" aria-expanded="false" style="padding: 2px 8px;">
-                          <i class="fa-solid fa-ellipsis-vertical"></i>
+                    <div class="card h-100" style="cursor: pointer;">
+                      <div class="card-body">
+                        <div class=" mt-2 d-flex justify-content-end">
+                         <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="userMenuDropdown"
+                              data-bs-toggle="dropdown" aria-expanded="false"
+                              style="border-radius: 50px; padding: 8px 20px; border: 1px solid #ddd;">
+                              <i class="fa-solid fa-ellipsis-vertical"></i>
                               
-                              
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenuDropdown"
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userMenuDropdown"
                               style="min-width: 200px;">
                               <li>
-                                <a class="dropdown-item" href="#" onclick="deleteFolder('${folder.id}', '${folder.name}'); return false;">
+                                <a class="dropdown-item" href="#" onclick="moveFileToTrash('${file.fileId}', '${folderId}'); return false;">
                                   <i class="fa-solid fa-trash" style="margin-right: 8px;"></i> Move to Trash
                                 </a>
                               </li>
@@ -478,39 +502,37 @@
                                 <hr class="dropdown-divider">
                               </li>
                               <li>
-                                <a class="dropdown-item text-primary" href="#" onclick="shareFolder('${folder.id}', '${folder.name}'); return false;">
-                                  <i class="fa-solid fa-share-nodes" style="margin-right: 8px;"></i> Share
+                                <a class="dropdown-item text-danger" href="#" onclick="downloadFile('${file.fileId}', '${file.name}'); return false;">
+                                  <i class="fa-solid fa-right-from-bracket" style="margin-right: 8px;"></i> DownLoad File
                                 </a>
                               </li>
                             </ul>
-                      </div>
-                      <div class="card-body"  href="#" onclick="openFolder('${folder.id}'); return false;">
-                        <div class="text-center mb-3">
-                          <i class="fa-solid fa-folder" style="font-size: 48px; color: #0d6efd;"></i>
+                          </div>
                         </div>
-                        <h5 class="card-title text-center">${folder.name || 'Unnamed Folder'}</h5>
+                        <div class="  text-center mb-3" onclick="downloadFile('${file.fileId}','${file.name}');" >
+                          <i class="fa-solid fa-file" style="font-size: 48px; color: #0d6efd;"></i>
+                        </div>
+                        <h5 class="card-title text-center">${file.name || 'Unnamed File'}</h5>
                       </div>
-                      
                     </div>
+                    
                   </div>
                 `;
-              folderListContainer.innerHTML += folderCard;
+              folderListContainer.innerHTML += fileCard;
             });
           } else {
-            // No folders found
+
+            // No files found
             folderListContainer.innerHTML = `
                 <div class="col-lg-12 text-center" style="padding: 50px;">
-                  <i class="fa-solid fa-folder-open" style="font-size: 64px; color: #ccc;"></i>
-                  <h4 class="mt-3 text-muted">No folders found</h4>
-                  <p class="text-muted">Create your first folder to get started</p>
-                  <a href="create.html" class="btn btn-primary mt-3">
-                    <i class="fa-solid fa-folder-plus"></i> Create New Folder
-                  </a>
+                  <i class="fa-solid fa-file" style="font-size: 64px; color: #ccc;"></i>
+                  <h4 class="mt-3 text-muted">No files found in this folder</h4>
+                  <p class="text-muted">Upload your first file to get started</p>
                 </div>
               `;
           }
         } else {
-          let errorMessage = "Failed to load folders";
+          let errorMessage = "Failed to load files";
 
           if (response.status === 401) {
             toastr.error("Session expired. Please login again.");
@@ -519,14 +541,14 @@
             }, 2000);
             return;
           } else if (response.status === 404) {
-            errorMessage = "API endpoint not found";
+            errorMessage = "Folder not found or no files available";
           }
 
           folderListContainer.innerHTML = `
               <div class="col-lg-12 text-center" style="padding: 50px;">
-                <i class="fa-solid fa-exclamation-triangle" style="font-size: 64px; color: #dc3545;"></i>
+                <i class="fa-solid fa-exclamation-triangle" style="font-size: 64px; color: #000000;"></i>
                 <h4 class="mt-3 text-danger">${errorMessage}</h4>
-                <button class="btn btn-primary mt-3" onclick="GetAllFolder()">
+                <button class="btn btn-primary mt-3" onclick="GetByFolder()">
                   <i class="fa-solid fa-refresh"></i> Retry
                 </button>
               </div>
@@ -534,48 +556,75 @@
           toastr.error(errorMessage);
         }
       } catch (error) {
-        console.error("Error loading folders:", error);
+        console.error("Error loading files:", error);
         const folderListContainer = document.getElementById("folder-list");
         folderListContainer.innerHTML = `
             <div class="col-lg-12 text-center" style="padding: 50px;">
               <i class="fa-solid fa-exclamation-triangle" style="font-size: 64px; color: #dc3545;"></i>
               <h4 class="mt-3 text-danger">Network Error</h4>
               <p class="text-muted">Please check your connection and try again</p>
-              <button class="btn btn-primary mt-3" onclick="GetAllFolder()">
+              <button class="btn btn-primary mt-3" onclick="GetByFolder()">
                 <i class="fa-solid fa-refresh"></i> Retry
               </button>
             </div>
           `;
-        toastr.error("Failed to load folders. Please try again.");
+        toastr.error("Failed to load files. Please try again.");
       }
     }
+    // async function downloadFile(fileId, folderId) {
+    //   try {
+    //     const token = localStorage.getItem("token");
+    //     if (!token) {
+    //       window.location.href = "../login.html";
+    //       return;
+    //     }
+    //     const response = await fetch(`http://localhost:5025/api/File/download?fileId=${fileId}&folderId=${folderId}`, {
+    //       method: "GET",
+    //       headers: {
+    //         'Authorization': `bearer ${token}`
+    //       }
+    //     });
+    //     if (!response.ok) {
+    //       throw new Error('Download failed');
+    //     }
 
+    //     // Lấy blob từ response
+    //     const blob = await response.blob();
 
-    function openFolder(folderId) {
-      if (!folderId) {
-        toastr.error("Invalid folder ID");
-        return;
-      }
-      // Redirect to file list page for this folder
-      window.location.href = `../file/allFleInFolder.html?id=${folderId}`;
-    }
+    //     // Lấy tên file từ header hoặc sử dụng tên mặc định
+    //     const contentDisposition = response.headers.get('Content-Disposition');
+    //     const fileName = contentDisposition
+    //       ? contentDisposition.split('filename=')[1].replace(/"/g, '')
+    //       : 'downloaded-file';
 
-    async function deleteFolder(folderId, folderName) {
-      if (!confirm(`Are you sure you want to delete "${folderName}"?`)) {
-        return;
-      }
+    //     // Tạo URL tạm thời và trigger download
+    //     const url = window.URL.createObjectURL(blob);
+    //     const a = document.createElement('a');
+    //     a.href = url;
+    //     a.download = fileName;
+    //     document.body.appendChild(a);
+    //     a.click();
 
+    //     // Cleanup
+    //     window.URL.revokeObjectURL(url);
+    //     document.body.removeChild(a);
+    //   } catch (error) {
+    //     console.error('Error downloading file:', error);
+    //     alert('Download failed!');
+    //   }
+    // }
+
+    async function moveFileToTrash(fileId, folderId) {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
-          toastr.error("You must be logged in");
           window.location.href = "../login.html";
           return;
         }
 
-        let url = `http://localhost:5025/api/Folder?folderId=${folderId}`;
+        let url = `http://localhost:5025/api/File/MoveToTrash?fileId=${fileId}&folderId=${folderId}`;
         const response = await fetch(url, {
-          method: "DELETE",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token,
@@ -583,32 +632,27 @@
         });
 
         if (response.ok) {
-          toastr.success(`Folder "${folderName}" deleted successfully!`);
-          // Reload both folder list and dropdown
-          await Promise.all([GetAllFolder(), loadFoldersToDropdown()]);
-        } else if (response.status === 401) {
-          toastr.error("Session expired. Please login again.");
-          setTimeout(() => {
-            window.location.href = "../login.html";
-          }, 2000);
-        } else if (response.status === 404) {
-          toastr.error("Folder not found");
+          toastr.success("File moved to trash successfully");
+          await GetByFolder();
         } else {
-          const errorText = await response.text();
-          toastr.error(errorText || "Failed to delete folder. Please try again.");
+          let errorMessage = "Failed to move file to trash";
+
+          if (response.status === 401) {
+            toastr.error("Session expired. Please login again.");
+            setTimeout(() => {
+              window.location.href = "../login.html";
+            }, 2000);
+            return;
+          } else if (response.status === 404) {
+            errorMessage = "File not found";
+          }
+
+          toastr.error(errorMessage);
         }
       } catch (error) {
-        console.error("Error deleting folder:", error);
-        toastr.error("Network error. Please check your connection and try again.");
+        console.error("Error moving file to trash:", error);
+        toastr.error("Network error. Please try again.");
       }
-    }
-    function shareFolder(folderId, folderName) {
-      if (!folderId) {
-        toastr.error("Invalid folder ID");
-        return;
-      }
-      // Redirect to share page with folder ID
-      window.location.href = `share.html?id=${folderId}`;
     }
 
     async function logout() {
@@ -624,7 +668,6 @@
           return;
         }
 
-        // Call logout API
         const response = await fetch("http://localhost:5025/api/Account/Logout", {
           method: "POST",
           headers: {
@@ -634,14 +677,12 @@
         });
 
         if (response.ok) {
-          // Remove token from localStorage
           localStorage.removeItem("token");
           toastr.success("Logged out successfully!");
           setTimeout(() => {
             window.location.href = "../login.html";
           }, 1000);
         } else if (response.status === 401) {
-          // Token invalid or expired, still logout locally
           localStorage.removeItem("token");
           toastr.warning("Session expired. Redirecting to login...");
           setTimeout(() => {
@@ -653,7 +694,6 @@
         }
       } catch (error) {
         console.error("Error during logout:", error);
-        // Even if API fails, logout locally
         localStorage.removeItem("token");
         toastr.warning("Network error. Logged out locally.");
         setTimeout(() => {
@@ -662,10 +702,9 @@
       }
     }
 
+
     function changePassword() {
       toastr.info("Change password feature - Coming soon!");
-      // TODO: Implement change password modal or redirect to change password page
-      // You can create a modal or redirect to a change password page
     }
   </script>
 </body>

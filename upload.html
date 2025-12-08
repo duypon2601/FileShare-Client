@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="folderId" />
+    <input type="text" id="token" />
+    <input type="file" id="file" length="1" />
+    <button onclick="Upload()">Upload</button>
+
+    <script>
+      async function Upload() {
+        let folderId = document.getElementById("folderId").value;
+        let token = document.getElementById("token").value;
+        let file = document.getElementById("file").files[0];
+        let url =
+          "http://localhost:5025/api/File?FolderId=" +
+          folderId +
+          "&Token=" +
+          token;
+        var data = new FormData();
+        data.append("file", file);
+        const response = await fetch(url, {
+          method: "POST",
+          body: data,
+        });
+        if(response.ok){
+          alert("Uploaded");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../FileShare-API"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "FileShare-Client"
+	}
+}
