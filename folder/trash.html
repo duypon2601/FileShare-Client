@@ -30,12 +30,30 @@
           </div>
           <div class="divider"></div>
           <div class="col-lg-12 menu">
+            <div class="col-lg-8">
+              <a class="row menu-link" onclick="showMenu(1)"
+                style="box-shadow:2px 2px grey;border-radius:10px ;background-color:#e7f3ff;padding-left: 5%;">
+                <div class="col-lg-9"><span><i class="fa-solid fa-plus"></i></span> <span
+                    style="padding-left: 5%;">NEW</span></div>
+                <div id="menu-link-1" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
+              </a>
+
+            </div>
+            <div id="menu-content-1" style="display: none;" class="col-lg-10 menu-content">
+              <a class="menu-item col-lg-12"
+                onclick="window.location.href='../file/upload.html?id='+new URLSearchParams(window.location.search).get('id')">
+                <span><i class="fa-solid fa-minus "></i> <span style="padding-left: 5%;">Up Load File</span>
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-12 menu">
             <div class="col-lg-12">
               <a class="row menu-link" onclick="showMenu(1)">
                 <div class="col-lg-9"><span><i class="fa-solid fa-house-laptop"></i></span> <span
                     style="padding-left: 5%;">Home</span></div>
                 <div id="menu-link-1" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
               </a>
+
             </div>
             <div id="menu-content-1" style="display: none;" class="col-lg-10 menu-content">
               <a class="menu-item col-lg-12">
@@ -47,19 +65,31 @@
           <div class="col-lg-12 menu">
             <div class="col-lg-12">
               <a class="row menu-link" onclick="showMenu(2)">
-                <div class="col-lg-9"><span><i class="fa-solid fa-folder"></i></span> <span
+                <div class="col-lg-9"><span><i class="fa-solid fa-house-laptop"></i></span> <span
                     style="padding-left: 5%;">Folder</span></div>
                 <div id="menu-link-2" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
               </a>
+
             </div>
             <div id="menu-content-2" style="display: none;" class="col-lg-10 menu-content">
               <div class="row col-lg-12">
                 <a href="create.html" class="menu-item col-lg-12">
-                  <span><i class="fa-solid fa-plus"></i> <span style="padding-left: 5%;">Add New Folder</span>
+                  <span><i class="fa-solid fa-minus"></i> <span style="padding-left: 5%;">Add New Folder</span>
                 </a>
                 <a href="all.html" class="menu-item col-lg-12">
-                  <span><i class="fa-solid fa-list"></i> <span style="padding-left: 5%;">List All</span>
+                  <span><i class="fa-solid fa-minus"></i> <span style="padding-left: 5%;">List All</span>
                 </a>
+                <a href="shareWithMe.html" class="menu-item col-lg-12">
+                  <span><i class="fa-solid fa-minus"></i> <span style="padding-left: 5%;">Share With Me</span>
+                </a>
+                <div class="menu-item col-lg-12">
+                  <label>
+                    <select id="folderDropdown" class="form-select form-select-sm"
+                      onchange="navigateToFolder(this.value)">
+                      <option value="">Loading Folder...</option>
+                    </select>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -71,8 +101,11 @@
                     style="padding-left: 5%;">My Folders</span></div>
                 <div id="menu-link-3" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
               </a>
+
             </div>
             <div id="menu-content-3" style="display: none;" class="col-lg-10 menu-content">
+
+
               <div id="folderDropdownList" class="col-lg-12">
                 <div class="text-center" style="padding: 10px; font-size: 12px; color: #999;">
                   <i class="fa-solid fa-spinner fa-spin"></i> Loading...
@@ -84,12 +117,33 @@
           <div class="col-lg-12 menu">
             <div class="col-lg-12">
               <a class="row menu-link" onclick="showMenu(4)">
-                <div class="col-lg-9"><span><i class="fa-solid fa-trash"></i></span> <span
-                    style="padding-left: 5%;">Trash Bin</span></div>
+                <div class="col-lg-9"><span><i class="fa-solid fa-folder-open"></i></span> <span
+                    style="padding-left: 5%;">Share With Me</span></div>
                 <div id="menu-link-4" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
               </a>
+
             </div>
             <div id="menu-content-4" style="display: none;" class="col-lg-10 menu-content">
+
+
+              <div id="sharedFolderDropdownList" class="col-lg-12">
+                <div class="text-center" style="padding: 10px; font-size: 12px; color: #999;">
+                  <i class="fa-solid fa-spinner fa-spin"></i> Loading...
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 menu">
+            <div class="col-lg-12">
+              <a class="row menu-link" onclick="showMenu(5)">
+                <div class="col-lg-9"><span><i class="fa-solid fa-trash"></i></span> <span
+                    style="padding-left: 5%;">Trash Bin</span></div>
+                <div id="menu-link-5" data-status="0" class="col-lg-2"><i class="fa-solid fa-angles-right"></i> </div>
+              </a>
+
+            </div>
+            <div id="menu-content-5" style="display: none;" class="col-lg-10 menu-content">
               <div class="row col-lg-12">
                 <a href="trash.html" class="menu-item col-lg-12">
                   <span><i class="fa-solid fa-trash-can"></i> <span style="padding-left: 5%;">View Trash</span>
@@ -97,6 +151,9 @@
               </div>
             </div>
           </div>
+
+
+
         </div>
       </div>
       <div class="col-lg-10 main" style="
@@ -208,6 +265,7 @@
       }
 
       await loadFoldersToDropdown();
+      await loadShareFoldersToDropdown();
       await displayTrash();
     };
 
@@ -252,6 +310,73 @@
         }
       } catch (error) {
         console.error("Error loading folders to dropdown:", error);
+      }
+    }
+
+    async function loadShareFoldersToDropdown() {
+      try {
+        const token = localStorage.getItem("token");
+        const dropdownList = document.getElementById("sharedFolderDropdownList");
+        if (!dropdownList) return;
+
+        const response = await fetch("http://localhost:5025/api/Folder/GetFolderByPermission", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          }
+        });
+
+        if (response.ok) {
+          const folders = await response.json();
+
+          dropdownList.innerHTML = "";
+
+          if (folders && folders.length > 0) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentFolderId = urlParams.get('id');
+
+            folders.forEach(folder => {
+              const isActive = currentFolderId === folder.id;
+              const folderItem = document.createElement("a");
+              folderItem.href = `../file/allFleInFolder.html?id=${folder.id}`;
+              folderItem.className = "menu-item";
+              folderItem.style.cssText = isActive
+                ? "display: block; width: 100%; background-color: #e7f3ff; border-left: 3px solid #0d6efd; padding: 8px 10px 8px 10%; text-decoration: none; color: inherit;"
+                : "display: block; width: 100%; padding: 8px 10px 8px 10%; text-decoration: none; color: inherit;";
+
+              folderItem.innerHTML = `
+                <i class="fa-solid fa-folder" style="color: ${isActive ? '#0d6efd' : '#666'}; font-size: 12px;"></i> 
+                <span style="padding-left: 8px; font-size: 13px;">${folder.name || 'Unnamed Folder'}</span>
+              `;
+
+              dropdownList.appendChild(folderItem);
+            });
+          } else {
+            dropdownList.innerHTML = `
+              <div class="text-center" style="padding: 10px; font-size: 12px; color: #999;">
+                <i class="fa-solid fa-folder-open"></i> No shared folders yet
+              </div>
+            `;
+          }
+        } else {
+          dropdownList.innerHTML = `
+            <div class="text-center" style="padding: 10px; font-size: 12px; color: #dc3545;">
+              <i class="fa-solid fa-exclamation-triangle"></i> Failed to load
+            </div>
+          `;
+          console.error("Failed to load shared folders:", response.status);
+        }
+      } catch (error) {
+        console.error("Error loading shared folders to dropdown:", error);
+        const dropdownList = document.getElementById("sharedFolderDropdownList");
+        if (dropdownList) {
+          dropdownList.innerHTML = `
+            <div class="text-center" style="padding: 10px; font-size: 12px; color: #dc3545;">
+              <i class="fa-solid fa-exclamation-triangle"></i> Error loading
+            </div>
+          `;
+        }
       }
     }
 
