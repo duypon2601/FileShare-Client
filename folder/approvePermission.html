@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://code.jquery.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' http://localhost:5025 ws://127.0.0.1:*; img-src 'self' data:;">
+    <title>Approve Permission</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .approval-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        .icon-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .icon-container i {
+            font-size: 80px;
+            color: #11998e;
+        }
+        .btn-approve {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        .btn-approve:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4);
+        }
+        .btn-deny {
+            background: #dc3545;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        .btn-deny:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+        }
+        .info-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="approval-card">
+        <div class="icon-container">
+            <i class="fa-solid fa-user-check"></i>
+        </div>
+        <h2 class="text-center mb-4">Approve Permission Request</h2>
+        <p class="text-center text-muted mb-4">
+            A user has requested access to your folder. Would you like to grant permission?
+        </p>
+        
+        <div id="requestInfo" class="info-box">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="actionButtons" style="display: none;">
+            <div class="row">
+                <div class="col-6">
+                    <button class="btn btn-approve w-100" onclick="approvePermission()">
+                        <i class="fa-solid fa-check me-2"></i>Approve
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-deny w-100" onclick="denyPermission()">
+                        <i class="fa-solid fa-times me-2"></i>Deny
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-3">
+            <a href="../index.html" class="text-decoration-none">Go back to home</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    
+    <script>
+        const API_URL = "http://localhost:5025/api/Folder";
+        const urlParams = new URLSearchParams(window.location.search);
+        const folderId = urlParams.get('folderId');
+        const requesterId = urlParams.get('requesterId');
+
+        // Check if owner is logged in
+        const token = localStorage.getItem('token');
+        if (!token) {
+            toastr.warning('Please login to approve this request');
+            setTimeout(() => {
+                window.location.href = `../login.html?redirect=${encodeURIComponent(window.location.href)}`;
+            }, 2000);
+        } else {
+            // Verify owner and load info
+            verifyOwner();
+        }
+
+        async function verifyOwner() {
+            if (!folderId || !requesterId) {
+                document.getElementById('requestInfo').innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fa-solid fa-exclamation-circle me-2"></i>Invalid request parameters
+                    </div>
+                `;
+                return;
+            }
+
+            try {
+                // Check if user is the owner of the folder
+                const response = await fetch(`${API_URL}/CheckOwner?folderId=${folderId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // User is owner, display info
+                    document.getElementById('requestInfo').innerHTML = `
+                        <div>
+                            <p><strong>Folder ID:</strong> ${folderId}</p>
+                            <p><strong>Requester ID:</strong> ${requesterId}</p>
+                            <p class="text-muted mb-0">By approving, you will grant this user access to view and interact with your folder.</p>
+                        </div>
+                    `;
+                    document.getElementById('actionButtons').style.display = 'block';
+                } else if (response.status === 401) {
+                    toastr.error('Please login again');
+                    setTimeout(() => {
+                        window.location.href = `../login.html?redirect=${encodeURIComponent(window.location.href)}`;
+                    }, 1500);
+                } else {
+                    document.getElementById('requestInfo').innerHTML = `
+                        <div class="alert alert-danger">
+                            <i class="fa-solid fa-exclamation-circle me-2"></i>You are not the owner of this folder
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('requestInfo').innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fa-solid fa-exclamation-circle me-2"></i>Error verifying ownership
+                    </div>
+                `;
+            }
+        }
+
+        async function approvePermission() {
+            const approveBtn = event.target;
+            approveBtn.disabled = true;
+            approveBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Approving...';
+
+            try {
+                const response = await fetch(`${API_URL}/ApprovePermission?folderId=${folderId}&requesterId=${requesterId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.text();
+
+                if (response.ok) {
+                    toastr.success('Permission granted successfully!');
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 2000);
+                } else if (response.status === 401) {
+                    toastr.error('Please login again');
+                    setTimeout(() => {
+                        window.location.href = '../login.html';
+                    }, 1500);
+                } else {
+                    toastr.error(data || 'Failed to approve permission');
+                    approveBtn.disabled = false;
+                    approveBtn.innerHTML = '<i class="fa-solid fa-check me-2"></i>Approve';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                toastr.error('An error occurred. Please try again.');
+                approveBtn.disabled = false;
+                approveBtn.innerHTML = '<i class="fa-solid fa-check me-2"></i>Approve';
+            }
+        }
+
+        function denyPermission() {
+            toastr.info('Permission request denied');
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
