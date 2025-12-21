@@ -41,7 +41,6 @@
     }
 
     function toggleDestinationFolder() {
-      const sourceMode = document.querySelector('input[name="sourceMode"]:checked')?.value;
       const outputAction = document.querySelector('input[name="outputAction"]:checked')?.value;
       const uploadDestinationFolder = document.getElementById('uploadDestinationFolder');
       
@@ -49,7 +48,8 @@
         return;
       }
       
-      if (sourceMode === 'upload' && outputAction === 'save') {
+      // Show folder selection whenever save action is selected
+      if (outputAction === 'save') {
         uploadDestinationFolder.style.display = 'block';
       } else {
         uploadDestinationFolder.style.display = 'none';
@@ -326,17 +326,6 @@
                       <input type="file" class="form-control" id="uploadFile" accept="*/*">
                       <div class="form-text">Select a file from your computer to convert</div>
                     </div>
-
-                    <!-- Destination Folder (only for save action) -->
-                    <div class="mb-4" id="uploadDestinationFolder" style="display: none;">
-                      <label for="uploadFolderSelect" class="form-label fw-bold">
-                        <i class="fa-solid fa-folder"></i> Save to Folder
-                      </label>
-                      <select class="form-select" id="uploadFolderSelect">
-                        <option value="">Loading folders...</option>
-                      </select>
-                      <div class="form-text">Choose the folder to save the converted file</div>
-                    </div>
                   </div>
 
                   <!-- Source Type -->
@@ -399,6 +388,17 @@
                       </div>
                     </div>
                     <div class="form-text">Choose whether to save the converted file to your folder or download it immediately</div>
+                  </div>
+
+                  <!-- Destination Folder (for save action - shown when Save to Folder is selected) -->
+                  <div class="mb-4" id="uploadDestinationFolder" style="display: block;">
+                    <label for="uploadFolderSelect" class="form-label fw-bold">
+                      <i class="fa-solid fa-folder-plus"></i> Destination Folder
+                    </label>
+                    <select class="form-select" id="uploadFolderSelect">
+                      <option value="">Select destination folder...</option>
+                    </select>
+                    <div class="form-text">Choose the folder to save the converted file</div>
                   </div>
 
                   <!-- Action Buttons -->
@@ -730,6 +730,15 @@
         }
       }
 
+      // Validate destination folder for save action
+      if (outputAction === 'save') {
+        const uploadFolderSelect = document.getElementById("uploadFolderSelect");
+        if (!uploadFolderSelect || !uploadFolderSelect.value) {
+          toastr.error("Please select a destination folder");
+          return;
+        }
+      }
+
       if (!sourceType || !outputFormat) {
         toastr.error("Please select source type and output format");
         return;
@@ -772,7 +781,7 @@
           formData.append('OutputAction', outputAction);
           formData.append('uploadFIle', uploadFile.files[0]);
           
-          // Get AccId if needed for save action
+          // Add DestinationFolderId for save action
           if (outputAction === 'save') {
             const uploadFolderSelect = document.getElementById('uploadFolderSelect');
             
@@ -783,18 +792,7 @@
               return;
             }
             
-            const accIdResponse = await fetch("http://localhost:5025/api/Account/GetCurrentUser", {
-              method: "GET",
-              headers: { "Authorization": "Bearer " + token }
-            });
-            if (accIdResponse.ok) {
-              const userData = await accIdResponse.json();
-              const accId = userData.id || userData.accountId || userData.accId || '';
-              if (accId && uploadFolderSelect.value) {
-                formData.append('AccId', accId);
-                formData.append('FolderName', uploadFolderSelect.options[uploadFolderSelect.selectedIndex].dataset.folderName);
-              }
-            }
+            formData.append('DestinationFolderId', uploadFolderSelect.value);
           }
 
           response = await fetch("http://localhost:5025/api/Convert/ConvertToPdf", {
@@ -804,11 +802,22 @@
           });
         } else {
           // Handle existing file mode
+          const uploadFolderSelect = document.getElementById("uploadFolderSelect");
+          let destinationFolderId = null;
+          
+          if (outputAction === 'save') {
+            if (uploadFolderSelect && uploadFolderSelect.value) {
+              destinationFolderId = uploadFolderSelect.value;
+            }
+          }
+          
           const requestBody = {
             FolderName: folderName,
             FileName: fileName,
             SourceType: sourceType,
-            OutputAction: outputFormat
+            OutputFormat: outputFormat,
+            OutputAction: outputAction,
+            DestinationFolderId: destinationFolderId
           };
 
           response = await fetch("http://localhost:5025/api/Convert", {
@@ -993,6 +1002,14 @@
           formData.append('FilePath', filePath);
           formData.append('FileName', fileName);
         }
+        
+        // Add DestinationFolderId if save action
+        if (outputAction === 'save') {
+          const uploadFolderSelect = document.getElementById("uploadFolderSelect");
+          if (uploadFolderSelect && uploadFolderSelect.value) {
+            formData.append('DestinationFolderId', uploadFolderSelect.value);
+          }
+        }
 
         console.log('Sending request to ConvertPngToIcoV2 with:');
         for (let pair of formData.entries()) {
@@ -1050,17 +1067,24 @@
             convertResult.style.display = 'block';
             toastr.success("PNG to ICO conversion and download successful!");
           } else {
-            // Save action not supported in V2
+            // Save action successful
+            const result = await response.json();
             convertResult.innerHTML = `
-              <div class="alert alert-warning">
+              <div class="alert alert-success">
                 <h5 class="alert-heading">
-                  <i class="fa-solid fa-exclamation-triangle"></i> Save Action Not Supported
+                  <i class="fa-solid fa-check-circle"></i> PNG to ICO Conversion & Save Successful!
                 </h5>
-                <p class="mb-0">The save action is not yet implemented for PNG to ICO conversion. Please use download instead.</p>
+                <hr>
+                <p class="mb-0">
+                  <strong>File:</strong> ${result.fileName || 'Converted file'}<br>
+                  <strong>Converted from:</strong> PNG<br>
+                  <strong>Converted to:</strong> ICO<br>
+                  <strong>Status:</strong> <span class="badge bg-success">Saved to folder</span>
+                </p>
               </div>
             `;
             convertResult.style.display = 'block';
-            toastr.warning("Save action not supported for PNG to ICO conversion");
+            toastr.success(result.message || "PNG to ICO conversion and save successful!");
           }
           
           // Reset form after a delay
